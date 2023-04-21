@@ -102,55 +102,55 @@
 
 </style>
       <script>
-        var numRestaurantes = 1;
-        // Função para exibir os resultados da recomendação
-        function mostrarRecomendados(recomendados) {
-    var resultado = document.getElementById("resultado");
-    resultado.innerHTML = "";
-    if (recomendados.length === 0) {
-        resultado.innerHTML = "<p>Nenhum restaurante encontrado.</p>";
-        return;
-    }
-    for (var i = 0; i < numRestaurantes; i++) {
-        var restaurante = recomendados[i][0];
+ var numRestaurantes = 5;
+    var imagens = ["curitiba1.jpg", "curitiba2.jpg", "curitiba3.jpg", "curitiba4.jpg", "curitiba5.jpg"];
+
+    function mostrarRecomendados(recomendados) {
+        var resultado = document.getElementById("resultado");
+        resultado.innerHTML = "";
+        if (recomendados.length === 0) {
+            resultado.innerHTML = "<p>Nenhum restaurante encontrado.</p>";
+            return;
+        }
+        for (var i = 0; i < numRestaurantes; i++) {
+            var restaurante = recomendados[i][0];
             var media_sentimento = recomendados[i][1];
             var nome = restaurante.name;
             var endereco = restaurante.address;
             var pontuacao = restaurante.rating;
             var comentario = restaurante.reviews[0].content;
-            var imagemNome = "curitiba.png"; // Nome da imagem na mesma pasta que o projeto
             var div = document.createElement("div");
-            div.style.width = "300px"; // definir a largura do bloco que contem o restaurante
-            div.style.border = "1px solid #ccc"; // definir uma borda ao bloco
-            div.style.padding = "10px"; // definir o padding do bloco
-            var imagem = document.createElement("img"); // Criar um elemento de imagem
-            imagem.style.width = "100%"; // Definir a largura da imagem como 100% do elemento pai
-            imagem.src = imagemNome; // Definir o atributo 'src' como o nome da imagem
             div.innerHTML = "<h3>" + nome + "</h3><p>" + endereco + "</p><p>Média de sentimento: " + media_sentimento + "</p>";
-            div.appendChild(imagem); // Adicionar a imagem à div
             resultado.appendChild(div);
-    }
-    if (numRestaurantes < recomendados.length) {
-        var maisButton = document.createElement("button");
-        maisButton.innerHTML = "+";
-        maisButton.onclick = function() {
-            numRestaurantes++;
-            mostrarRecomendados(recomendados);
-        };
-        resultado.appendChild(maisButton);
 
-    } 
-    
-    else {
-        var maisButton = document.getElementById("maisButton");
-        if (maisButton) {
-            maisButton.parentNode.removeChild(maisButton);
-            
+            // Criar elemento de imagem e definir o src como o nome da imagem correspondente
+            var imagemNome = imagens[i];
+            var imagem = document.createElement("img");
+            imagem.src = imagemNome;
+            imagem.style.width = "100%";
+            div.style.width = "300px";
+            div.style.border = "1px solid #ccc";
+            div.style.padding = "10px";
+            div.appendChild(imagem);
+        }
+        if (numRestaurantes < recomendados.length) {
+            var maisButton = document.createElement("button");
+            maisButton.innerHTML = "+";
+            maisButton.onclick = function() {
+                numRestaurantes++;
+                mostrarRecomendados(recomendados);
+            };
+            resultado.appendChild(maisButton);
+
+        } 
+
+        else {
+            var maisButton = document.getElementById("maisButton");
+            if (maisButton) {
+                maisButton.parentNode.removeChild(maisButton);
+            }
         }
     }
-}
-
-javascript
 
         // Função para enviar a pesquisa para a API
         function enviarPesquisa() {
